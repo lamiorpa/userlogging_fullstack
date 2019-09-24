@@ -1,9 +1,6 @@
 <!-- Php & mysql logging form tutorial:
 https://www.tutorialrepublic.com/php-tutorial/php-mysql-login-system.php -->
 
-<!-- 
-TODO: Ohjelman sisältö selväkielisenä
--->
 <!DOCTYPE html>
 <html lang="en">
 <?php
@@ -100,34 +97,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     $mysqli->close();
-}
-
-// Prepeared insert statement for form item text
-// Prepared statements: https://www.tutorialrepublic.com/php-tutorial/php-mysql-prepared-statements.php
-if (isset($_POST['item'])) {
-    if ($_POST['item'] !== "") {
-        $sl_insert_item =
-            "INSERT INTO shoppinglist_table (task_data) VALUES (?)";
-
-        // Bind parameters: ($stmt, $types, &$var1, &...$_)
-        // b — binary (such as image, PDF file, etc.)
-        // d — double (floating point number)
-        // i — integer (whole number)
-        // s — string (text)
-        if ($stmt = mysqli_prepare($link, $sl_insert_item)) {
-
-            $task_data = mysqli_real_escape_string($link, $_POST['item']); // escaping not necessary in prepared statement but a good habit against SQL injections
-            mysqli_stmt_bind_param($stmt, "s", $task_data,);
-
-            if (mysqli_stmt_execute($stmt)) {
-                //echo "Records inserted successfully";
-            } else {
-                echo "ERROR: Could not execute query: $sl_insert_item. " . mysqli_error($link);
-            }
-        } else {
-            echo "ERROR: Could not prepare query: $sl_insert_item. " . mysqli_error($link);
-        }
-    }
 }
 ?>
 
